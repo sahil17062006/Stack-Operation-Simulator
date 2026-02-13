@@ -1,0 +1,33 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Run C program (auto delete exe)",
+      "type": "shell",
+      "command": "cmd",
+      "args": [
+        "/c",
+        "gcc \"${file}\" -o run && run && del run.exe"
+      ],
+      "group": {
+        "kind": "build",
+        "isDefault": false
+      },
+      "problemMatcher": ["$gcc"]
+    },
+    {
+      "label": "Run C++ program (auto delete exe)",
+      "type": "shell",
+      "command": "cmd",
+      "args": [
+        "/c",
+        "g++ \"${file}\" -o run && run && del run.exe"
+      ],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "problemMatcher": ["$gcc"]
+    }
+  ]
+}
