@@ -5,7 +5,7 @@
 
 import { useState } from 'react';
 import type { MultiStackEntry } from '../types/stack';
-import { useFirebaseOperations } from '../hooks/useFirebaseOperations';
+
 
 interface Props {
   activeStack: MultiStackEntry;
@@ -39,7 +39,7 @@ export default function OperationPanel({
   const [pushError, setPushError] = useState('');
   const [activeOp, setActiveOp] = useState<string | null>(null);
 
-  const { saveOperation, clearOperations } = useFirebaseOperations();
+
 
   const handlePush = () => {
     const trimmed = pushValue.trim();
@@ -55,8 +55,6 @@ export default function OperationPanel({
     setPushValue('');
     setActiveOp('push');
     onPush(n);
-    // Save operation to Firebase
-    saveOperation('push', n, activeStack.stack.getElements());
     setTimeout(() => setActiveOp(null), 400);
   };
 
@@ -64,15 +62,10 @@ export default function OperationPanel({
     setActiveOp(id);
     setTimeout(() => setActiveOp(null), 400);
 
-    // Save operation to Firebase before executing
-    saveOperation(id, undefined, activeStack.stack.getElements());
-
     switch (id) {
       case 'pop':   return onPop();
       case 'peek':  return onPeek();
-      case 'clear':
-        clearOperations(); // Clear Firebase operations too
-        return onClear();
+      case 'clear':  return onClear();
       case 'undo':  return onUndo();
       case 'empty': return onCheckEmpty();
       case 'full':  return onCheckFull();
